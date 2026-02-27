@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="tituloPagina"></title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background: linear-gradient(135deg,#2b0033,#000000);
+    color:white;
+    text-align:center;
+}
+
+header{
+    padding:40px 20px;
+}
+
+h1{
+    font-size:50px;
+    margin:0;
+}
+
+.slogan{
+    margin-top:10px;
+    opacity:0.85;
+}
+
+.infoSemana{
+    margin-top:5px;
+    font-size:14px;
+    opacity:0.7;
+}
+
+.links{
+    margin-top:25px;
+}
+
+.links a{
+    display:inline-block;
+    margin:10px;
+    padding:12px 22px;
+    background:#ff00ff;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.links a:hover{
+    transform:scale(1.07);
+}
+
+.participantes, .equipe{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:40px;
+}
+
+.card{
+    background:#1a001f;
+    padding:20px;
+    border-radius:20px;
+    width:220px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #ff00ff;
+}
+
+.nome{
+    margin-top:15px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.frase{
+    margin-top:8px;
+    font-size:14px;
+    opacity:0.8;
+    font-style:italic;
+}
+
+.status{
+    margin-top:10px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.eliminado{
+    opacity:0.35;
+}
+
+.emparedado{
+    border:2px solid #ff0000;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+.divisor{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:30px;
+    letter-spacing:2px;
+}
+
+footer{
+    padding:20px;
+    background:rgba(0,0,0,0.4);
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1 id="nomeReality"></h1>
+    <div class="slogan" id="sloganReality"></div>
+    <div class="infoSemana" id="diaReality"></div>
+
+    <div class="links" id="linksContainer"></div>
+</header>
+
+<div class="participantes" id="listaParticipantes"></div>
+
+<div class="divisor">
+    _______________________________ NOSSA EQUIPE _______________________________
+</div>
+
+<div class="equipe" id="listaEquipe"></div>
+
+<footer>
+    Reality acontece todo sábado até restar apenas 1 vencedor.
+</footer>
+
+<script>
+
+/* ========= EDITA SOMENTE AQUI ========= */
+
+const info = {
+
+  geral: {
+    nomeReality: "BBB Blox",
+    slogan: "Convivência. Estratégia. Só um vence.",
+    dia: "Todo sábado"
+  },
+
+  links: {
+    TikTok: "https://www.tiktok.com/@bbb.26.blox",
+    Inscrição: "https://forms.gle/9Tppxk7V7NRUFkoWA",
+    VotaçãoParedão: "https://link-da-votacao.com"
+  },
+
+  participantes: {
+
+    pessoa1: {
+      nome: "Seu nome",
+      frase: "Você pode estar aqui, Inscreva-se já.",
+      imagem: "LINK_DA_IMAGEM_1",
+      eliminado: false,
+      emparedado: false
+    }
+
+  },
+
+  equipe: {
+
+    prod1: {
+      nome: "Jean",
+      funcao: "Apresentador do Reality",
+      imagem: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-6F196E424F59415035AFE97B009A7258-Png/150/150/AvatarHeadshot/Webp/noFilter"
+    },
+
+    prod2: {
+      nome: "Gaby",
+      funcao: "Decoração e Provas",
+      imagem: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-0B796BE867FB61D54AE3D6F6214EFBBA-Png/150/150/AvatarHeadshot/Webp/noFilter"
+    }
+
+  }
+
+};
+
+/* ========= NÃO MEXER DAQUI PRA BAIXO ========= */
+
+document.getElementById("tituloPagina").textContent = info.geral.nomeReality;
+document.getElementById("nomeReality").textContent = info.geral.nomeReality;
+document.getElementById("sloganReality").textContent = info.geral.slogan;
+document.getElementById("diaReality").textContent = info.geral.dia;
+
+const linksContainer = document.getElementById("linksContainer");
+Object.entries(info.links).forEach(([nome, url])=>{
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.textContent = nome;
+    linksContainer.appendChild(a);
+});
+
+const lista = document.getElementById("listaParticipantes");
+Object.values(info.participantes).forEach(pessoa=>{
+
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    if(pessoa.eliminado){
+        card.classList.add("eliminado");
+    } else if(pessoa.emparedado){
+        card.classList.add("emparedado");
+    }
+
+    card.innerHTML = `
+        <img src="${pessoa.imagem}">
+        <div class="nome">${pessoa.nome}</div>
+        <div class="frase">"${pessoa.frase}"</div>
+        <div class="status">
+            ${pessoa.eliminado ? "Eliminado" : pessoa.emparedado ? "Emparedado" : "Na disputa"}
+        </div>
+    `;
+
+    lista.appendChild(card);
+});
+
+const listaEquipe = document.getElementById("listaEquipe");
+Object.values(info.equipe).forEach(membro=>{
+
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.innerHTML = `
+        <img src="${membro.imagem}">
+        <div class="nome">${membro.nome}</div>
+        <div class="frase">${membro.funcao}</div>
+    `;
+
+    listaEquipe.appendChild(card);
+});
+
+</script>
+
+</body>
+</html>
